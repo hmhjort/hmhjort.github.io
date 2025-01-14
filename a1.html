@@ -21,13 +21,15 @@
     <div class="calculation">
       <p>Here is my calculation for the resistors for this circuit. </p>
       <p> The Arduino output voltage is 5V and each LED has a voltage drop of 1.8V. The desired current for 
-        each LED is 20mA or .02A. Based on my calcultaion of a 160 ohms I used a 220 ohm resistor to ensure that 
+        each LED is 20mA or .02A. Based on my calculation of a 160 ohms I used a 220 ohm resistor to ensure that 
         the current in each LED wouldn't exceed 20mA. 
       </p>
       <img src="Calculation.png" />
     </div>
     <div class="circuit">
-      <p>Here is my circuit I made. </p>
+      <p>Here is my circuit I made. I chose to use 3 LEDs including a red, yellow, and green LED. 
+        I connected these LEDs to the 4, 5, 6 pins in my Arduino. 
+      </p>
       <img src="Circuit.png" />
     </div>
     <div class="gif">
@@ -35,7 +37,9 @@
       <img src="Calculation.png" />
     </div>
     <div class="code">
-      <p>Here is a code snipit from the Arduino code that I wrote for the circuit. </p>
+      <p>Here is a code snipit from the Arduino code that I wrote for the circuit. I used red, yellow, and green LEDs and 
+        connected them to the 4, 5, and 6 pins in my Arduino. I chose to have each LED light up for 200ms and then turn off for 200ms
+      before the next one turns on. </p>
       <pre><code>
         // Label LED pins
         int red = 4; // Pin for red LED
