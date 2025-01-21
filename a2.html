@@ -4,15 +4,108 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
 
-    <title>Example Student's HCDE 439 Physical Computing Page!</title>
+    <title>Hailey Hjort's's HCDE 439 Physical Computing Page!</title>
 
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <h1>Example Student's Assignment 2!</h1>
+    <h1>Hailey Hjort's Assignment 2!</h1>
     <div class="header">
-      <img src="red-panda.jpg" />
+      <img src="Circuit_A2.png" />
       <p>Here is all the documentation for assignment 2!</p>
     </div>
+    <div class="schematic">
+      <p>Here are my drawings of the schematic for this circuit. </p>
+      <img src="Schematic_A2.png" />
+    </div>
+    <div class="calculation">
+      <p>Here is my calculation for the resistors for this circuit. </p>
+      <p> The Arduino output voltage is 5V and each LED has a voltage drop of 1.8V. The desired current for 
+        each LED is 20mA or .02A. Based on my calculation of a 160 ohms I used a 220 ohm resistor to ensure 
+        that the current in each LED wouldn't exceed 20mA. For my pushbutton resistor I used a 10k ohm 
+        resistor to enure that there is a stable voltage level for the circuit and that the pushbutton doesn't 
+        unpredicatbly move between open and closed.
+      </p>
+      <img src="Calculation_A2.png" />
+    </div>
+    <div class="circuit">
+      <p>Here is my circuit I made. I chose to use 3 LEDs including a red, yellow, and green LED. 
+        I connected these LEDs to the 5, 6, and 9 pins in my Arduino. I also used a pushbutton which is connected 
+        to the 10 pin in my Arduino.
+      </p>
+      <img src="Circuit_A2.png" />
+    </div>
+    <div class="gif">
+      <p>Here is a gif of the functioning circuit. </p>
+      <img src="Gif_A2.gif" />
+    </div>
+    <div class="code">
+      <p>Here is a code snipit from the Arduino code that I wrote for the circuit. I used red, yellow, and green LEDs and 
+        connected them to the 5, 6, and 9 pins in my Arduino. I also used a pushbutton which I connected to the 10 pin on 
+        my Arduino. I chose to have both the yellow and green LEDs each light up for 1000ms and then turn off for 1000ms. I chose 
+        to have the red LED slowly fade from 0 to 255 PWM pausing for 9ms between each inscrease in PWM. Then there is a 1000ms pause before
+        the loop starts again.  </p>
+      <pre><code>
+        // Label LED pins and button pin
+        int red = 9; // Pin for red LED
+        int yellow = 5; // Pin for yellow LED
+        int green = 6; // Pin for green LED
+        int buttonPin = 10; // Pin for button
+
+        int buttonState = 0; // variable for reading buttonpin
+
+        // the setup function runs once when you press reset or power the board
+        void setup() {
+          // Set all LED pins as OUTPUT
+          pinMode(yellow, OUTPUT);  // initialize yellow LED as an output.
+          pinMode(green, OUTPUT);   // initialize green LED as an output.
+          pinMode(red, OUTPUT);   // initialize red LED as an output.
+
+          pinMode(buttonPin, INPUT); // initialize the pushbutton pin as an input.
+        }
+
+        // the loop function runs over and over again forever
+        void loop() {
+          // turn red LED on and off 
+          digitalWrite(yellow, HIGH);  // turn the yellow LED on (HIGH is the voltage level)
+          delay(1000);                      // wait for 1000 milliseconds
+          digitalWrite(yellow, LOW);   // turn the yellow LED off by making the voltage LOW
+          delay(1000);      // wait for 1000 milliseconds
+        
+          digitalWrite(green, HIGH);  // turn the green LED on (HIGH is the voltage level)
+          delay(1000);                      // wait for 1000 milliseconds
+          digitalWrite(green, LOW);   // turn the green LED off by making the voltage LOW
+          delay(1000);                    // wait for 1000 milliseconds
+
+          // read the state of the pushbutton value
+          buttonState = digitalRead(buttonPin);
+
+          // check if the pushbutton is pressed. If it is, the buttonState is HIGH
+          if (buttonState == HIGH) {
+            digitalWrite(red, HIGH);  // turn the red LED on (HIGH is the voltage level)
+            delay(1000);                      // wait for 1000 milliseconds
+            digitalWrite(red, LOW);   // turn the red LED off by making the voltage LOW
+            delay(1000);    // wait for 1000 milliseconds
+          } else {
+            for(int i = 0; i < 256; i++){ // slowly increase voltage  
+              analogWrite(red, i); // change red LED voltage
+              delay(9); // wait for 9 milliseconds 
+            }
+            digitalWrite(red, LOW);   // turn the red LED off by making the voltage LOW
+            delay(1000);    // wait for 1000 milliseconds
+          }
+        }
+      </code></pre>
+    </div>
+    <div class="questions">
+      <p>1. Voltage Graph </p>
+      <img src="Graph_A2.png" />
+      <p>2.  Based on my circuit, schematic, and firmware my circuit could run for about 190.15 hours if being powered by a 
+        1200mA battery. Both my yellow and green LEDs have 14.5mA of current when turned on for 1000ms each and my red LED has between 0 and 
+        14.5mA of current as it fades on during the 2295ms it takes to fully turn on. During this loop, there are 1000ms breaks between LEDs turning on. 
+        Based on the fact that current does not flow if the LEDs are not turned on, my circuit could run for approximately 190.15 hours before the 
+        battery would run out. 
+      </p>
+    </div1
   </body>
 </html>
