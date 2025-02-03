@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+    <title>Hailey Hjort's's HCDE 439 Physical Computing Page!</title>
+
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1>Hailey Hjort's Assignment 4!</h1>
+    <div class="header">
+      <img src="Circuit_A4.png" />
+      <p>Here is all the documentation for assignment 4!</p>
+    </div>
+    <div class="schematic">
+      <p>Here are my drawings of the schematic for this circuit. I used a servo motor which I connected to pin 9, the 5V pin, and the ground. 
+        I also used the capacitive sensor which I connected to pins 2 and 4. I used a 1M ohm resistor in order to make the sensor require 
+        absolute touch in order to turn on the servo motor. 
+      </p>
+      <img src="Schematic_A4.png" />
+    </div>
+    <div class="circuit">
+      <p>Here is my circuit I made. I chose to use a servo motor and a capacitive sensor. I connected the servo motor to pin 9 as well as the 5V pin, 
+        and the ground. I connected the capacitive sensor to pins 2 and 4 and used a 1M ohm resistor so that you would have to touch the metal object
+        (coin) in order to turn on the motor.  
+      </p>
+      <img src="Circuit_A4.png" />
+    </div>
+    <div class="gif">
+      <p>Here is a gif of the functioning circuit</p>
+      <img src="Gif_A4.gif" />
+    </div>
+    <div class="code">
+      <p> Here is the code snipit from the Arduino code that I wrote for the circuit. I used the Capacitive Sensor and Servo 
+        libraries. I connected my servo motor to pin 9 and my capacitive sensor to pins 2 and 4. I mapped the servo motor degrees from
+        0 to 180 to relation to the sensor values between 0 and 1000. I chose the degrees for the servo motor based on how many degrees 
+        it is able to turn. I chose the sensor values based on the values that I was receiving in my serial monitor when testing the capacitive sensor to make sure that it was able to 
+        reach the full 180 degrees when being touched. My code delays each reading by 100ms to give the servo motor time to rotate before recieving the next reading. 
+      </p>
+      <pre><code>
+        #include <CapacitiveSensor.h>  // Use capacitive sensor library
+        #include <Servo.h>    // Use capacitive servo library
+            
+        CapacitiveSensor   cs_4_2 = CapacitiveSensor(4,2);      // create a capacitive sensor object between pins 2 and 4 
+        Servo myServo;  // create a servo object
+            
+        void setup() {
+            cs_4_2.set_CS_AutocaL_Millis(0xFFFFFFFF);  // turn off autocalibrate on arduino
+            Serial.begin(9600);  // initialize serial communications at 9600 bps
+            myServo.attach(9); // attaches the servo on pin 9 to the servo object
+        }
+            
+        void loop() {
+            long start = millis();  // record number of milliseconds that have passed 
+            long total1 =  cs_4_2.capacitiveSensor(30); // record value returned from capaicitve sensor
+            total2 = map(total1, 0, 1000, 0, 180);  // map capacitive sensor values to servo motor degress of turning
+            myServo.write(total2);    // rotate servo motor 
+            
+            Serial.print(millis() - start);     // check on performance in milliseconds
+            Serial.print("\t");                 // tab character for debug window spacing
+            
+            Serial.println(total2);             // print sensor output 
+            delay(100);                         // delay 100ms to limit data to serial port
+        }
+      </code></pre>
+    </div>
+    <div class="questions">
+      <p>1. Draw a graph with the X axis in seconds, for two seconds, and the y-axis the voltage at pin 9 with respect to ground.
+      </p>
+      <img src="Graph_A4.png" />
+      <p>2.  I would average out the values that are being read in the loop and change the output based on that value.
+        <pre><code>
+        int total = 0;
+        for (int i = 0; i < 10; i++){
+            total += sensor reading;
+            delay(5);
+        }
+        total = map(total, sensor values, ouput values);
+        output.write(total);
+     </code></pre>
+      </p>
+      <p>3.  To address this I would use the constrain method to make sure that the values arent outside of the normal range.  I would also keep track of the last input value and only change the 
+      output value if the input value hasnt jumped too far from the last input value. 
+        <pre><code>
+      int lastReading = 0;
+      long newReading = sensor reading;
+      int conReading = constrain(newReading, low sensor value, high sensor value);
+
+      if (difference between lastReading and conReading < 5% of max sensor value) {
+        lastReading = conReading
+        conReading = map(sensor values, output values)
+        output.write(conReading)
+      }
+    </code></pre>
+    </p>
+    </div1
+  </body>
+</html>
